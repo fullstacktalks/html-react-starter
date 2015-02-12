@@ -5,13 +5,13 @@
   <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
 
   <script type="text/jsx">
-    var App = React.createClass({
-      render: function () {
-        return <div>Hello React</div>;
+    var HelloMessage = React.createClass({
+      render: function() {
+        return <div>Hello {this.props.name}</div>;
       }
     });
 
-    React.render(<App />, document.body);
+    React.render(<HelloMessage name="John" />, document.body);
   </script>
 </body>
 </html>
