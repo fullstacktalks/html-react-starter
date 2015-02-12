@@ -3,15 +3,39 @@
 <body>
   <script src="http://fb.me/react-0.12.2.js"></script>
   <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
 
   <script type="text/jsx">
-    var App = React.createClass({
-      render: function () {
-        return <div>Hello React</div>;
+    var converter = new Showdown.converter();
+
+    var MarkdownEditor = React.createClass({
+      getInitialState: function() {
+        return {value: 'Type some *markdown* here!'};
+      },
+      handleChange: function() {
+        this.setState({value: this.refs.textarea.getDOMNode().value});
+      },
+      render: function() {
+        return (
+          <div className="MarkdownEditor">
+            <h3>Input</h3>
+            <textarea
+              onChange={this.handleChange}
+              ref="textarea"
+              defaultValue={this.state.value} />
+            <h3>Output</h3>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{
+                __html: converter.makeHtml(this.state.value)
+              }}
+            />
+          </div>
+        );
       }
     });
 
-    React.render(<App />, document.body);
+    React.render(<MarkdownEditor />, document.body);
   </script>
 </body>
 </html>
